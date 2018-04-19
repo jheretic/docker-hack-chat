@@ -1,10 +1,6 @@
 FROM lsiobase/alpine:3.7
 MAINTAINER J
  
-ENV ADMIN_NAME adminn
-ENV PASSWORD passwordadmin
-ENV SALT j3N2GDa
- 
 RUN apk update && apk add git make nodejs nodejs-npm supervisor
 RUN git clone https://github.com/hack-chat/main.git /app \
 && cd /app \

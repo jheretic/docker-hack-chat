@@ -1,7 +1,7 @@
 FROM lsiobase/alpine:3.7
 MAINTAINER J
  
-RUN apk update && apk add git make nodejs nodejs-npm supervisor
+RUN apk update && apk add git make nodejs nodejs-npm
 RUN git clone https://github.com/hack-chat/main.git /app \
 && cd /app \
 && git checkout 4c1485ce2c1d2d985e9733214b211a4f40c0c375 \

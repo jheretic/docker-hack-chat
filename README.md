@@ -55,10 +55,10 @@ docker run -d --name hchat \
 If you want to use ssl, you'll need nginx or similar sitting in front of it and proxying to hacker-chat.
 Say you wanted to access the client at `https://<some_domain>/hacker-chat-thingy` with an encrypted websocket at `https://<some_domain>/bleepblippitybleepbloop` .
 
+
+Purposely not specifying the hacker-chat ports here as nginx link to it.
 ```
 docker run -d --name hchat \
- -p 8080:8080 \
- -p 6060:6060 \
  -e WSPROTOCOL="wss://" \
  -e WSPORT="443" \
  -e WSBASEURL="/bleepblippitybleepbloop" \
@@ -70,7 +70,7 @@ docker run -d --name hchat \
 
 Create nginx directory so you can easily modify the conf file. Then you'll want to have some user own that directory.
 ```
-sudo mkdir /opt/docker-web
+sudo mkdir -p /opt/docker-web
 sudo groupadd --gid 1002 dockeruser
 sudo adduser --no-create-home --system --disabled-login --gid 1002 --uid 121 dockeruser
 sudo chown dockeruser:dockeruser /opt/docker-web
@@ -81,7 +81,7 @@ Start an nginx container. This particular one has self-signed certs already setu
 sudo docker run --name web -p 443:443 --link hchat:hchat -v /opt/docker-web:/config -e PUID=121 -e PGID=1002 -e DH_SIZE=2048 -e TZ=America/New_York mcgriddle/nginx-self-cert
 ```
 
-Kill the container.
+Kill the container when you see 'Server Ready'
 
 Now modify the nginx conf in `/opt/docker-web/nginx/site-confs/default` to look like this
 

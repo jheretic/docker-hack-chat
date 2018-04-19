@@ -132,5 +132,9 @@ server {
 You should be able to access hchat now on `https://<your_ip>/hacker-chat-thingy/`
 
 
+### Sources
 
-
+https://github.com/linuxserver/docker-baseimage-alpine
+https://github.com/linuxserver/docker-letsencrypt
+https://github.com/MarvAmBass/docker-nginx-ssl-secure
+https://github.com/McGriddle/docker-nginx-self-cert

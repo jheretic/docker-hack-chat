@@ -98,11 +98,11 @@ server {
 	}
  
 	location /bleepblippitybleepbloop {
-        rewrite ^/bleepblippitybleepbloop / break;
-        proxy_pass http://websocket;
-	    proxy_http_version 1.1;
-	    proxy_set_header Upgrade websocket;
-	    proxy_set_header Connection upgrade;
+        	rewrite ^/bleepblippitybleepbloop / break;
+        	proxy_pass http://websocket;
+	    	proxy_http_version 1.1;
+	    	proxy_set_header Upgrade websocket;
+	    	proxy_set_header Connection upgrade;
 	}
 
 }

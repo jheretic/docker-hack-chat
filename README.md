@@ -78,7 +78,7 @@ sudo chown dockeruser:dockeruser /opt/docker-web
 
 Start an nginx container. This particular one has self-signed certs already setup. The PUID and PGID need to match whatever group and user was created above, or another user.
 ```
-sudo docker run --name web -p 443:443 --link hchat:hchat -v /opt/docker-web:/config -e PUID=1002 -e PGID=121 -e DH_SIZE=2048 -e TZ=America/New_York mcgriddle/nginx-self-cert
+sudo docker run --name web -p 443:443 --link hchat:hchat -v /opt/docker-web:/config -e PUID=121 -e PGID=1002 -e DH_SIZE=2048 -e TZ=America/New_York mcgriddle/nginx-self-cert
 ```
 
 Kill the container.

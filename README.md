@@ -24,6 +24,7 @@ docker run -d --name hchat \
 * `-p 6060:6060` - the port the client listens on
 * `-e WSPROTOCOL` - websocket protocol that the client will use to contact the server. "ws://" or "wss://"
 * `-e WSPORT` - websocket port that the client will use to contact the server. cannot be blank.
+* `-e WSBASEURL` - base url used for reverse proxy setups. needs to have leading forward slash.
 * `-e ADMIN_NAME` - cannot be blank
 * `-e PASSWORD` - bannot be blank
 * `-e SALT` - cannot be blank

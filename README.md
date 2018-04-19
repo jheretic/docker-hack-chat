@@ -68,66 +68,6 @@ docker run -d --name hchat \
  mcgriddle/hacker-chat:latest
 ```
 
-
-Nginx would look something like this
-```
-
-upstream websocket {
-	server <ip_of_hchat>:6060;
-}
-
-server {
-	listen 443 ssl default_server;
-
-	#other cert stuff and configurations
-
-	location /hacker-chat-thingy/ {
-  		proxy_set_header Host $host:$server_port;
-		proxy_set_header X-Real-IP $remote_addr;
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-		proxy_set_header X-Forwarded-Proto https;
-		proxy_redirect  http://  $scheme://;
-		proxy_http_version 1.1;
-		proxy_set_header Connection "";
-		proxy_cache_bypass $cookie_session;
-		proxy_no_cache $cookie_session;
-		proxy_buffers 32 4k;
-
-		rewrite /reqs(.*) /$1  break;
-		proxy_pass http://<ip_of_hchat>:8080/;
-	}
- 
-	location /bleepblippitybleepbloop {
-        	rewrite ^/bleepblippitybleepbloop / break;
-        	proxy_pass http://websocket;
-	    	proxy_http_version 1.1;
-	    	proxy_set_header Upgrade websocket;
-	    	proxy_set_header Connection upgrade;
-	}
-
-}
-```
-
-
-#### Working example
-
-
-##### Start hacker-chat
-
-```
-docker run -d --name hchat \
- -p 8080:8080 \
- -p 6060:6060 \
- -e WSPROTOCOL="wss://" \
- -e WSPORT="443" \
- -e WSBASEURL="/bleepblippitybleepbloop" \
- -e ADMIN_NAME="boop" \
- -e PASSWORD="pass" \
- -e SALT="2dSg4kS" \
- mcgriddle/hacker-chat:latest
-```
-
-
 Create nginx directory so you can easily modify the conf file. Then you'll want to have some user own that directory.
 ```
 sudo mkdir /opt/docker-web

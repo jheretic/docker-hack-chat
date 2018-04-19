@@ -57,7 +57,7 @@ Say you wanted to access the client at `https://<some_domain>/hacker-chat-thingy
 
 ```
 docker run -d --name hchat \
- -p 5050:8080 \
+ -p 8080:8080 \
  -p 6060:6060 \
  -e WSPROTOCOL="wss://" \
  -e WSPORT="443" \
@@ -69,7 +69,7 @@ docker run -d --name hchat \
 ```
 
 
-Nginx would look someting like this
+Nginx would look something like this
 ```
 
 upstream websocket {
@@ -94,7 +94,7 @@ server {
 		proxy_buffers 32 4k;
 
 		rewrite /reqs(.*) /$1  break;
-		proxy_pass http://<ip_of_hchat>:5050/;
+		proxy_pass http://<ip_of_hchat>:8080/;
 	}
  
 	location /bleepblippitybleepbloop {
@@ -107,6 +107,90 @@ server {
 
 }
 ```
+
+
+#### Working example
+
+
+##### Start hacker-chat
+
+```
+docker run -d --name hchat \
+ -p 8080:8080 \
+ -p 6060:6060 \
+ -e WSPROTOCOL="wss://" \
+ -e WSPORT="443" \
+ -e WSBASEURL="/bleepblippitybleepbloop" \
+ -e ADMIN_NAME="boop" \
+ -e PASSWORD="pass" \
+ -e SALT="2dSg4kS" \
+ mcgriddle/hacker-chat:latest
+```
+
+
+Create nginx directory so you can easily modify the conf file. Then you'll want to have some user own that directory.
+```
+sudo mkdir /opt/docker-web
+sudo groupadd --gid 1002 dockeruser
+sudo adduser --no-create-home --system --disabled-login --gid 1002 --uid 121 dockeruser
+sudo chown dockeruser:dockeruser /opt/docker-web
+```
+
+Start an nginx container. This particular one has self-signed certs already setup. The PUID and PGID need to match whatever group and user was created above, or another user.
+```
+sudo docker run --name web -p 443:443 --link hchat:hchat -v /opt/docker-web:/config -e PUID=1002 -e PGID=121 -e DH_SIZE=2048 -e TZ=America/New_York mcgriddle/nginx-self-cert
+```
+
+Kill the container.
+
+Now modify the nginx conf in `/opt/docker-web/nginx/site-confs/default` to look like this
+
+```
+
+upstream websocket {
+	server hchat:6060;
+}
+
+# main server block
+server {
+	listen 443 ssl default_server;
+
+	root /config/www;
+	index index.html index.htm index.php;
+
+	server_name _;
+
+	# all ssl related config moved to ssl.conf
+	include /config/nginx/ssl.conf;
+
+	client_max_body_size 0;
+
+	location / {
+		try_files $uri $uri/ /index.html /index.php?$args =404;
+	}
+
+	location /hacker-chat-thingy/ {
+		include /config/nginx/proxy.conf;
+		rewrite /reqs(.*) /$1  break;
+		proxy_pass http://hchat:8080/;
+	}
+ 
+	location /bleepblippitybleepbloop {
+        	rewrite ^/bleepblippitybleepbloop / break;
+        	proxy_pass http://websocket;
+	    	proxy_http_version 1.1;
+	    	proxy_set_header Upgrade websocket;
+	    	proxy_set_header Connection upgrade;
+	}
+
+}
+
+```
+
+`sudo docker start web`
+
+You should be able to access hchat now on `https://<your_ip>/hacker-chat-thingy/`
+
 
 
 

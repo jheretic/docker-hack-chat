@@ -15,7 +15,7 @@ docker run -d --name hchat \
  -e ADMIN_NAME="boop" \
  -e PASSWORD="pass" \
  -e SALT="2dSg4kS" \
- mcgriddle/hacker-chat:latest
+ mcgriddle/hack.chat:latest
 ```
 
 ## Parameters
@@ -46,7 +46,7 @@ docker run -d --name hchat \
  -e ADMIN_NAME="boop" \
  -e PASSWORD="pass" \
  -e SALT="2dSg4kS" \
- mcgriddle/hacker-chat:latest
+ mcgriddle/hack.chat:latest
 ```
 
 
@@ -65,7 +65,7 @@ docker run -d --name hchat \
  -e ADMIN_NAME="boop" \
  -e PASSWORD="pass" \
  -e SALT="2dSg4kS" \
- mcgriddle/hacker-chat:latest
+ mcgriddle/hack.chat:latest
 ```
 
 Create nginx directory so you can easily modify the conf file. Then you'll want to have some user own that directory.

@@ -1,4 +1,4 @@
-# docker-hacker-chat
+# docker-hack.chat
 
 Docker container for https://github.com/hack-chat/main
 

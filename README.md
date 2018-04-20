@@ -52,7 +52,7 @@ docker run -d --name hchat \
 
 ### Encryption
 
-If you want to use ssl, you'll need nginx or similar sitting in front of it and proxying to hacker-chat.
+If you want to use ssl, you'll need nginx or similar sitting in front of it and proxying to hack-chat.
 Say you wanted to access the client at `https://<some_domain>/hacker-chat-thingy` with an encrypted websocket at `https://<some_domain>/bleepblippitybleepbloop` .
 
 
@@ -130,6 +130,8 @@ server {
 `sudo docker start web`
 
 You should be able to access hchat now on `https://<your_ip>/hacker-chat-thingy/`
+![hack-chat-main](https://user-images.githubusercontent.com/5432956/39061496-79851e9a-4492-11e8-9b53-350aa6299058.png)
+![hack-chat](https://user-images.githubusercontent.com/5432956/39061455-4d1f1040-4492-11e8-8652-6df0ae70c3c7.png)
 
 
 ### Sources

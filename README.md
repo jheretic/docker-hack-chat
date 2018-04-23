@@ -110,6 +110,7 @@ server {
 	}
 
 	location /hacker-chat-thingy/ {
+	        # https://github.com/McGriddle/docker-nginx-self-cert/blob/master/root/defaults/proxy.conf
 		include /config/nginx/proxy.conf;
 		rewrite /reqs(.*) /$1  break;
 		proxy_pass http://hchat:8080/;

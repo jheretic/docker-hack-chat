@@ -4,7 +4,7 @@ MAINTAINER J
 RUN apk update && apk add git make nodejs nodejs-npm
 RUN git clone https://github.com/hack-chat/main.git /app \
 && cd /app \
-&& git checkout b341644d93e99ea066156986c899a1fee974bb08 \
+&& git checkout 345dbfec41062408171b521f297f03e122f762c0 \
 && cd server \
 && npm install \
 && mkdir -p config \

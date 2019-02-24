@@ -26,7 +26,7 @@ docker run -d --name hchat \
 * `-e WSPORT` - websocket port that the client will use to contact the server. cannot be blank.
 * `-e WSBASEURL` - base url used for reverse proxy setups. needs to have leading forward slash.
 * `-e ADMIN_NAME` - cannot be blank
-* `-e PASSWORD` - bannot be blank
+* `-e PASSWORD` - cannot be blank
 * `-e SALT` - cannot be blank
 
 
@@ -115,7 +115,7 @@ server {
 		rewrite /reqs(.*) /$1  break;
 		proxy_pass http://hchat:8080/;
 	}
- 
+
 	location /bleepblippitybleepbloop {
         	rewrite ^/bleepblippitybleepbloop / break;
         	proxy_pass http://websocket;
